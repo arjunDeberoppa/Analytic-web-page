@@ -1,23 +1,55 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { tabs, durations, images } from "@/app/core/data";
 import { Bar, BarChart } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "./ui/chart";
+import { Component } from "./LineChart";
+import { BarrChart } from "./BarChart";
+import { LineCharts } from "./LineChart-2";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
+
+const generateRandomChartData = () => {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  return months.map((month) => ({
+    month,
+    desktop: Math.floor(Math.random() * 500),
+  }));
+};
 
 export default function Stats() {
   const [activeDuration, setActiveDuration] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<number>(0);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [chartData, setChartData] = useState(generateRandomChartData());
+
+  useEffect(() => {
+    setChartData(generateRandomChartData());
+  }, [activeDuration]);
 
   return (
-    <section className={`${montserrat.className} bg-[#222831] p-5 md:p-20 h-[1000px]`}>
+    <section
+      className={`${montserrat.className} bg-[#222831] p-5 md:p-20 h-[1500px]`}
+    >
       <div
-        className={`max-w-[1000px] md:h-[800px] p-5 lg:p-[60px] bg-white mx-auto rounded-3xl shadow-[0_6px_20px_rgba(255,255,255,20%)] ${
+        className={`max-w-[1000px] md:h-auto p-5 lg:p-[60px] bg-white mx-auto rounded-3xl shadow-[0_6px_20px_rgba(255,255,255,20%)] ${
           isFullscreen
             ? "fixed inset-0 max-w-[1440px] w-full h-full z-50 p-10 m-0"
             : ""
@@ -90,7 +122,7 @@ export default function Stats() {
               </div>
               <TabPanels className="flex-1">
                 <TabPanel className="h-full">
-                  <div className="h-full flex items-center justify-center">
+                  <div className="h-full flex justify-center">
                     The title of the chart is &apos;Global Smartphone Market
                     Share 2023&apos;. It depicts the market share of leading
                     smartphone manufacturers in 2023 on the x-axis and the
@@ -106,26 +138,16 @@ export default function Stats() {
                   </div>
                 </TabPanel>
                 <TabPanel className="h-full">
-                  <Image
-                    width={839}
-                    height={343}
-                    src={
-                      activeDuration !== null
-                        ? images[activeDuration]
-                        : "/chart.png"
-                    }
-                    alt="chart"
-                    className="w-full max-w-[898px] max-h-[343px]"
-                  />
+                  <LineCharts chartData={chartData} />
                 </TabPanel>
                 <TabPanel className="h-full">
                   <div className="h-full flex items-center justify-center">
-                    Stats dummy data
+                    <BarrChart />
                   </div>
                 </TabPanel>
                 <TabPanel className="h-full">
                   <div className="h-full flex items-center justify-center">
-                    Analysis dummy data
+                    <Component />
                   </div>
                 </TabPanel>
                 <TabPanel className="h-full">
