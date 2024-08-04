@@ -3,19 +3,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { tabs, durations } from "@/app/core/data";
+import { tabs, durations, images } from "@/app/core/data";
+import { Bar, BarChart } from "recharts";
+import { ChartContainer, ChartTooltipContent } from "./ui/chart";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
-
-const images = [
-  "/chart.png",
-  "/chart-1.png",
-  "/chart-2.png",
-  "/chart-3.png",
-  "/chart.png",
-  "/chart-1.png",
-  "/chart-2.png",
-];
 
 export default function Stats() {
   const [activeDuration, setActiveDuration] = useState<number | null>(null);
@@ -23,13 +15,15 @@ export default function Stats() {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   return (
-    <section className={`${montserrat.className} bg-[#222831] p-5 md:p-20`}>
+    <section className={`${montserrat.className} bg-[#222831] p-5 md:p-20 h-[1000px]`}>
       <div
-        className={`max-w-[1000px] md:h-[800px] p-5 md:p-[60px] bg-white mx-auto rounded-3xl shadow-[0_6px_20px_rgba(255,255,255,20%)] ${
-          isFullscreen ? "w-full h-auto fixed top-0 left-0 z-50 p-10" : ""
+        className={`max-w-[1000px] md:h-[800px] p-5 lg:p-[60px] bg-white mx-auto rounded-3xl shadow-[0_6px_20px_rgba(255,255,255,20%)] ${
+          isFullscreen
+            ? "fixed inset-0 max-w-[1440px] w-full h-full z-50 p-10 m-0"
+            : ""
         }`}
       >
-        <div className="flex flex-col gap-5 md:gap-10">
+        <div className="flex flex-col gap-5 lg:gap-10 h-full">
           <div className="flex flex-col gap-2">
             <div className="flex gap-2">
               <h1 className="text-3xl md:text-[70px] md:leading-[88px] text-dark-blue">
@@ -43,8 +37,8 @@ export default function Stats() {
               </p>
             </div>
           </div>
-          <div>
-            <TabGroup as="div" className="flex flex-col gap-10">
+          <div className="flex-1">
+            <TabGroup as="div" className="flex flex-col gap-3 md:gap-10 h-full">
               <TabList className="flex sticky overflow-x-auto gap-2 pb-2 md:gap-6 text-[#6F7177] font-medium">
                 {tabs.map(({ tab }, index) => (
                   <Tab
@@ -63,7 +57,7 @@ export default function Stats() {
                 ))}
               </TabList>
               <div className="flex flex-col lg:flex-row gap-5 lg:gap-28">
-                <div className="flex  gap-2 sm:gap-[30px]">
+                <div className="flex gap-2 sm:gap-[30px]">
                   <button
                     className="flex sticky overflow-x-auto gap-[10px] p-2"
                     onClick={() => setIsFullscreen(!isFullscreen)}
@@ -94,21 +88,24 @@ export default function Stats() {
                   </div>
                 )}
               </div>
-              <TabPanels>
-                <TabPanel>
-                  The title of the chart is &apos;Global Smartphone Market Share
-                  2023&apos;. It depicts the market share of leading smartphone
-                  manufacturers in 2023 on the x-axis and the percentage market
-                  share on the y-axis. Samsung holds the largest market share at
-                  22%, followed by Apple at 18%. There&apos;s a significant gap
-                  between these two leading brands and the rest of the market.
-                  Notably, Chinese manufacturers Xiaomi, Oppo, and Vivo
-                  collectively hold a combined share of 35%, indicating their
-                  growing presence in the global market. In conclusion, the
-                  smartphone market remains dominated by a few major players,
-                  but Chinese manufacturers are gaining significant ground.
+              <TabPanels className="flex-1">
+                <TabPanel className="h-full">
+                  <div className="h-full flex items-center justify-center">
+                    The title of the chart is &apos;Global Smartphone Market
+                    Share 2023&apos;. It depicts the market share of leading
+                    smartphone manufacturers in 2023 on the x-axis and the
+                    percentage market share on the y-axis. Samsung holds the
+                    largest market share at 22%, followed by Apple at 18%.
+                    There&apos;s a significant gap between these two leading
+                    brands and the rest of the market. Notably, Chinese
+                    manufacturers Xiaomi, Oppo, and Vivo collectively hold a
+                    combined share of 35%, indicating their growing presence in
+                    the global market. In conclusion, the smartphone market
+                    remains dominated by a few major players, but Chinese
+                    manufacturers are gaining significant ground.
+                  </div>
                 </TabPanel>
-                <TabPanel>
+                <TabPanel className="h-full">
                   <Image
                     width={839}
                     height={343}
@@ -121,9 +118,21 @@ export default function Stats() {
                     className="w-full max-w-[898px] max-h-[343px]"
                   />
                 </TabPanel>
-                <TabPanel>Stats dummy data</TabPanel>
-                <TabPanel>Analysis dummy data</TabPanel>
-                <TabPanel>Settings data</TabPanel>
+                <TabPanel className="h-full">
+                  <div className="h-full flex items-center justify-center">
+                    Stats dummy data
+                  </div>
+                </TabPanel>
+                <TabPanel className="h-full">
+                  <div className="h-full flex items-center justify-center">
+                    Analysis dummy data
+                  </div>
+                </TabPanel>
+                <TabPanel className="h-full">
+                  <div className="h-full flex items-center justify-center">
+                    Settings data
+                  </div>
+                </TabPanel>
               </TabPanels>
             </TabGroup>
           </div>

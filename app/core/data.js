@@ -15,3 +15,13 @@ export const durations = [
   { duration: "1y" },
   { duration: "max" },
 ];
+
+export const images = [
+  "/chart.png",
+  "/chart-1.png",
+  "/chart-2.png",
+  "/chart-3.png",
+  "/chart.png",
+  "/chart-1.png",
+  "/chart-2.png",
+];
