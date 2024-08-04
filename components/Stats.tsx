@@ -46,7 +46,7 @@ export default function Stats() {
 
   return (
     <section
-      className={`${montserrat.className} bg-[#222831] p-5 md:p-20 h-[1500px]`}
+      className={`${montserrat.className} bg-[#222831] p-5 md:p-20 h-auto md:h-[1500px]`}
     >
       <div
         className={`max-w-[1000px] md:h-auto p-5 lg:p-[60px] bg-white mx-auto rounded-3xl shadow-[0_6px_20px_rgba(255,255,255,20%)] ${
